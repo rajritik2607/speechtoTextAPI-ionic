@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button [color]="buttonColor" (click)="closeFunc()"fill="outline" >
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngFor="let match of matches | slice:0:1">
+    <h1>
+    <ion-input type="text" text-right id="input" [color]="textColor" [(ngModel)]="matches[0]"></ion-input>
+  </h1>
+
+  </ion-item>
+</ion-content>
+
+<ion-content>
+  <ion-button *ngIf="hideButton" class = "button button-assertive button-clear" [color]="buttonColor1" (click)="clearFunc()"> Clear Text
+  </ion-button>
+</ion-content>
+
+<ion-card>
+  <ion-card-content>
+    <ion-label color="dark">{{myVal}}</ion-label>
+    <ion-button class="ion-float-right" [color]="buttonColor" (click)="tempfunc()"fill="outline" >
+      <ion-icon slot="icon-only" [name]="buttonIcon"></ion-icon>
+    </ion-button>
+  </ion-card-content>
+</ion-card>
