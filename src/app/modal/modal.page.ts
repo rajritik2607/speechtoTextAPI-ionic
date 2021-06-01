@@ -1,7 +1,7 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { ChangeDetectorRef } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { IonTextarea, ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -11,16 +11,18 @@ import { ModalController } from '@ionic/angular';
 })
 export class ModalPage {
 
+  @ViewChild('inputText') inputText: IonTextarea;
   matches: String[];
   isRecording = false;
   buttonColor: string = "dark";
   buttonColor1: string = "light";
-  buttonIcon: string = "mic";
   textColor: string = "light";
   flag: number = 0;
   inputValue: String = "HI This";
   myVal: string = "Please say your request";
   hideButton:boolean = false;
+  hideButton1:boolean = true;
+  disableInput: boolean = true;
 
   constructor(private speechRecognition: SpeechRecognition, private cd: ChangeDetectorRef, private modalctrl: ModalController)  {
 
@@ -34,17 +36,17 @@ export class ModalPage {
     this.flag = this.flag + 1;
     if(this.flag % 2 == 0)
     {this.hideButton = true;
+      this.hideButton1 = false;
       this.stopListening()
       this.myVal = "Send Request"
-
       this.buttonColor = "dark";
       console.log("Stopped listening")
 
     }
     else
     {
-      this.buttonIcon = "mic";
       this.hideButton = false;
+      this.hideButton1 = true;
       this.startListening()
       this.myVal = "Listening..."
       this.buttonColor = "success";
@@ -75,7 +77,8 @@ export class ModalPage {
     this.speechRecognition.stopListening().then(() =>
     { this.isRecording = false
     });
-    this.buttonIcon = "send";
+    console.log(this.matches)
+
   }
 
   closeFunc() {
@@ -83,14 +86,28 @@ export class ModalPage {
   }
 
   clearFunc(){
-
-    this.buttonIcon = "mic";
     this.matches[0] = "";
+    this.hideButton = false;
+      this.hideButton1 = true;
+      this.disableInput = true;
 
   }
   sendFunc(){
-    this.modalctrl.dismiss(this.matches[0]);
+    this.modalctrl.dismiss({query: this.matches[0]});
+    console.log(this.matches[0])
   }
+
+  enableEdit()
+  {
+    this.disableInput = false;
+    //this.inputText.nativeElement.setFocus(10);
+    this.setTextCursor()
+    this.cd.detectChanges();
+  }
+  async setTextCursor() {
+    let inputEle = await this.inputText.getInputElement();
+    inputEle.setSelectionRange(this.matches[0].length,this.matches[0].length);
+   }
 
 // Start the recognition process
 

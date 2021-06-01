@@ -1,8 +1,8 @@
 import { Component, NgZone } from '@angular/core';
-import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
-import { ChangeDetectorRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { ChangeDetectorRef } from '@angular/core';
 import { ModalPage } from '../modal/modal.page';
+
 
 @Component({
   selector: 'app-tab1',
@@ -10,20 +10,31 @@ import { ModalPage } from '../modal/modal.page';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+matches : String[];
+result: String;
 
 
-
-
-  constructor(private speechRecognition: SpeechRecognition, private cd: ChangeDetectorRef, private modalctrl: ModalController)  {
+  constructor(private modalctrl: ModalController, private cdRef:ChangeDetectorRef)  {
 
   }
 
-  changefunc() {
-this.modalctrl.create ({
-  component: ModalPage
-}).then(modalres => {
-  modalres.present();
-})
+  async openSpeechRecModal() {
+
+this.result = null;
+let speechModal = await this.modalctrl.create({
+  component: ModalPage,
+  swipeToClose: true
+});
+speechModal.onDidDismiss().then((data) => {
+
+
+  if (data && data.data) {
+    this.result = data.data.query; 
+    console.log(this.result)
+    this.cdRef.detectChanges()
+  }
+});
+await speechModal.present();
 
   }
 

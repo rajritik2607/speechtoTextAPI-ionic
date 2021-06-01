@@ -4,9 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
-
 import { Tab1PageRoutingModule } from './tab1-routing.module';
-import { ModalPage } from '../modal/modal.page';
 import { ModalPageModule } from '../modal/modal.module';
 
 @NgModule({
@@ -19,4 +17,6 @@ import { ModalPageModule } from '../modal/modal.module';
   ],
   declarations: [Tab1Page]
 })
-export class Tab1PageModule {}
+export class Tab1PageModule {
+
+}

@@ -1,16 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Test Tab
+      Test Page
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
+<ion-content>
+  <h1 color = "dark">{{result}}</h1>
 
+</ion-content>
 
 <ion-card>
   <ion-card-content>
-    <ion-button class="ion-float-right" (click)="changefunc()"fill="outline" >
+    <ion-button class="ion-float-right" (click)="openSpeechRecModal()"fill="outline" >
       <ion-icon slot="icon-only" name="mic"></ion-icon>
     </ion-button>
   </ion-card-content>
